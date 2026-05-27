@@ -10,7 +10,7 @@ An **AI-powered healthcare assistant** built using **RAG, LLMs, and Streamlit** 
 
 ## 🚀 Live Demo
 
-👉 https://YOUR-APP-NAME.streamlit.app
+https://agentic-healthcare-assistant-stahtxis4shjwmmidcuyna.streamlit.app/
 
 ---
 
