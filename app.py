@@ -7,6 +7,9 @@ from main import HealthcareAssistant
 from core.config import settings
 from data.loaders import load_all_data
 
+st.write("App startup: app.py loaded successfully")
+print("DEBUG: app.py started")
+
 st.set_page_config(page_title='Agentic Healthcare Assistant', page_icon='🏥', layout='wide')
 st.title('🏥 Agentic Healthcare Assistant')
 st.caption('Planner + tools + memory + RAG + evaluation dashboard')
@@ -14,6 +17,19 @@ st.caption('Planner + tools + memory + RAG + evaluation dashboard')
 @st.cache_resource(show_spinner=False)
 def get_assistant() -> HealthcareAssistant:
     return HealthcareAssistant()
+
+
+assistant = None
+startup_error = None
+
+try:
+    assistant = get_assistant()
+except Exception as e:
+    startup_error = str(e)
+
+if startup_error:
+    st.error(f"Startup failed: {startup_error}")
+    st.stop()
 
 assistant = get_assistant()
 loaded = load_all_data(settings.data_dir)
