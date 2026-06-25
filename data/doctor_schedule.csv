@@ -1,0 +1,6 @@
+doctor_name,specialty,slot,available
+Dr. Neha Iyer,general physician,2026-06-25 10:00,True
+Dr. Arjun Rao,nephrologist,2026-06-25 11:30,False
+Dr. Asha Menon,pulmonologist,2026-06-25 16:00,True
+Dr. Vikram Shah,cardiologist,2026-06-26 09:30,False
+Dr. Meera Nair,endocrinologist,2026-06-26 14:00,True
