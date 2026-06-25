@@ -1,13 +1,14 @@
 from __future__ import annotations
 from dataclasses import asdict
 from pathlib import Path
+from typing import Optional
 import pandas as pd
 import streamlit as st
 from main import HealthcareAssistant
 from core.config import settings
 from data.loaders import load_all_data
 
-st.write("App startup: app.py loaded successfully")
+#st.write("App startup: app.py loaded successfully")
 print("DEBUG: app.py started")
 
 st.set_page_config(page_title='Agentic Healthcare Assistant', page_icon='🏥', layout='wide')
@@ -18,9 +19,8 @@ st.caption('Planner + tools + memory + RAG + evaluation dashboard')
 def get_assistant() -> HealthcareAssistant:
     return HealthcareAssistant()
 
-
-assistant = None
-startup_error = None
+assistant: Optional[HealthcareAssistant] = None
+startup_error: Optional[str] = None
 
 try:
     assistant = get_assistant()
@@ -31,7 +31,8 @@ if startup_error:
     st.error(f"Startup failed: {startup_error}")
     st.stop()
 
-assistant = get_assistant()
+assert assistant is not None
+#assistant = get_assistant()
 loaded = load_all_data(settings.data_dir)
 records_df = loaded['records']
 pdf_texts = loaded['pdf_texts']
@@ -44,12 +45,18 @@ with st.sidebar:
     st.write('Chunk overlap:', settings.chunk_overlap)
     st.write('Top-k retrieval:', settings.retrieval_top_k)
     st.write('Data dir:', settings.data_dir)
-    
+    st.divider()
     st.subheader("Doctor Schedule Controls")
 
     if st.button("Reset appointment slots"):
         trace = assistant.doctor_tool.reset_slots()
         st.success(trace.output_summary)
+    
+    try:
+        schedule_df = assistant.doctor_tool.view_schedule()
+        st.dataframe(schedule_df, use_container_width=True)
+    except Exception as e:
+        st.error(str(e))
 
 query = st.text_area(
     'Enter a patient/admin request',
