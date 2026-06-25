@@ -37,7 +37,7 @@ with st.sidebar:
 
 query = st.text_area(
     'Enter a patient/admin request',
-    value='My 70-year-old father has chronic kidney disease. I want to book a nephrologist for him. Also, can you summarize latest treatment methods?',
+    value='My 70-year-old uncle has chronic kidney disease. I want to book a nephrologist for him. Also, can you summarize latest treatment methods?',
     height=120
 )
 run = st.button('Run assistant', type='primary')
